@@ -1,12 +1,15 @@
 
-export type CalculationResult = {
-  value: number;
-  formatted: string;
-} | null;
+export type Precision = 0 | 1 | 2 | 3;
 
-export enum CalcType {
-  PERCENT_OF_VALUE = 'PERCENT_OF_VALUE',
-  VALUE_AS_PERCENT = 'VALUE_AS_PERCENT',
-  INCREASE_DECREASE = 'INCREASE_DECREASE',
-  VARIATION_RATE = 'VARIATION_RATE'
+export enum View {
+  CALCULATOR = 'CALCULATOR',
+  HELP = 'HELP'
+}
+
+export type VATMode = 'HT_TO_TTC' | 'TTC_TO_HT' | 'TVA_ONLY';
+
+export interface VATResult {
+  ht: string;
+  tva: string;
+  ttc: string;
 }
