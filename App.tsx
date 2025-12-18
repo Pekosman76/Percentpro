@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { CalculatorCard } from './components/CalculatorCard';
 import { InputGroup } from './components/InputGroup';
@@ -9,9 +8,9 @@ const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.CALCULATOR);
   const [precision, setPrecision] = useState<Precision>(2);
 
-  // Load precision from localStorage
+  // Load precision from localStorage using the brand-specific key
   useEffect(() => {
-    const saved = localStorage.getItem('percentpro_precision');
+    const saved = localStorage.getItem('calculerunpourcentage_precision');
     if (saved !== null) {
       const val = parseInt(saved, 10);
       if ([0, 1, 2, 3].includes(val)) {
@@ -22,7 +21,7 @@ const App: React.FC = () => {
 
   // Save precision to localStorage
   useEffect(() => {
-    localStorage.setItem('percentpro_precision', precision.toString());
+    localStorage.setItem('calculerunpourcentage_precision', precision.toString());
   }, [precision]);
 
   // Calc 1: Percentage of Value
@@ -54,14 +53,14 @@ const App: React.FC = () => {
   const [c4Phrase, setC4Phrase] = useState<string | null>(null);
   const [c4Err, setC4Err] = useState<string | null>(null);
 
-  // New Calc 5: Find Total
+  // Calc 5: Find Total
   const [c5Part, setC5Part] = useState('');
   const [c5Perc, setC5Perc] = useState('');
   const [c5Res, setC5Res] = useState<string | null>(null);
   const [c5Phrase, setC5Phrase] = useState<string | null>(null);
   const [c5Err, setC5Err] = useState<string | null>(null);
 
-  // New Calc 6: VAT France
+  // Calc 6: VAT France
   const [c6Mode, setC6Mode] = useState<VATMode>('HT_TO_TTC');
   const [c6Amt, setC6Amt] = useState('');
   const [c6Rate, setC6Rate] = useState('20');
@@ -77,8 +76,6 @@ const App: React.FC = () => {
   };
 
   const handleCopy = (text: string) => {
-    // We copy the raw value formatted with a dot for easy reuse in other tools if needed, 
-    // or the displayed text without spaces.
     const content = text.replace(/\s/g, '').replace(',', '.');
     navigator.clipboard.writeText(content);
   };
@@ -93,7 +90,6 @@ const App: React.FC = () => {
     if (c6Res) handleCalc6();
   }, [precision]);
 
-  // Logic for each card
   const handleCalc1 = () => {
     const p = parseFloat(c1Perc.replace(',', '.'));
     const t = parseFloat(c1Total.replace(',', '.'));
@@ -180,19 +176,17 @@ const App: React.FC = () => {
     setC6Phrase(`HT: ${formatNum(ht)} € | TVA (${r}%): ${formatNum(tva)} € | TTC: ${formatNum(ttc)} €`);
   };
 
-  // Smart Fill Handlers
   const resetAll = (setters: React.Dispatch<React.SetStateAction<string>>[]) => {
     setters.forEach(s => s(''));
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-indigo-100">
-      {/* Header compact */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveView(View.CALCULATOR)}>
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black text-lg">%</div>
-            <h1 className="text-xl font-black text-slate-800 tracking-tighter">Percent<span className="text-indigo-600">Pro</span></h1>
+            <h1 className="text-xl font-black text-slate-800 tracking-tighter">CalculerUn<span className="text-indigo-600">Pourcentage</span></h1>
           </div>
           <nav className="flex items-center gap-6">
             <button 
@@ -209,7 +203,6 @@ const App: React.FC = () => {
         <main className="flex-grow max-w-7xl mx-auto px-4 w-full py-6 md:py-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            {/* 1. Part d'un total */}
             <CalculatorCard
               title="Part d'un total"
               description="Calculer X% d'une valeur totale."
@@ -226,7 +219,6 @@ const App: React.FC = () => {
               <InputGroup label="Total" value={c1Total} onChange={setC1Total} onEnter={handleCalc1} placeholder="103" />
             </CalculatorCard>
 
-            {/* 2. Ratio en % */}
             <CalculatorCard
               title="Ratio en %"
               description="Quelle part représente X par rapport à Y ?"
@@ -243,7 +235,6 @@ const App: React.FC = () => {
               <InputGroup label="Total" value={c2Total} onChange={setC2Total} onEnter={handleCalc2} placeholder="200" />
             </CalculatorCard>
 
-            {/* 3. Évolution */}
             <CalculatorCard
               title="Évolution"
               description="Appliquer une hausse ou une baisse."
@@ -267,7 +258,6 @@ const App: React.FC = () => {
               <InputGroup label="Taux" value={c3Perc} onChange={setC3Perc} onEnter={handleCalc3} placeholder="15" suffix="%" />
             </CalculatorCard>
 
-            {/* 4. Taux de variation */}
             <CalculatorCard
               title="Taux de variation"
               description="Variation entre deux valeurs."
@@ -284,7 +274,6 @@ const App: React.FC = () => {
               <InputGroup label="Arrivée" value={c4End} onChange={setC4End} onEnter={handleCalc4} placeholder="150" />
             </CalculatorCard>
 
-            {/* 5. Retrouver le total */}
             <CalculatorCard
               title="Retrouver le total"
               description="Trouver le total à partir d'une part connue."
@@ -301,7 +290,6 @@ const App: React.FC = () => {
               <InputGroup label="Pourcentage" value={c5Perc} onChange={setC5Perc} onEnter={handleCalc5} placeholder="20" suffix="%" />
             </CalculatorCard>
 
-            {/* 6. TVA France */}
             <CalculatorCard
               title="TVA (France)"
               description="Calculs HT / TVA / TTC instantanés."
@@ -345,7 +333,7 @@ const App: React.FC = () => {
 
       <footer className="border-t border-slate-200 py-6 bg-white">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-          <p>© 2024 PercentPro — Outil confidentiel sans serveur</p>
+          <p>© 2024 CalculerUnPourcentage — Outil confidentiel sans serveur</p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Opérationnel
