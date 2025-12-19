@@ -77,7 +77,7 @@ const CalculatorCard = ({ title, description, children, result, resultPhrase, er
   ]);
 };
 
-// --- SECTION AIDE ---
+// --- SECTION AIDE DÉTAILLÉE ---
 
 const HelpSection = ({ precision, onPrecisionChange }) => {
   const sections = [
@@ -89,6 +89,7 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
     { id: 'variation', title: 'Taux de variation' },
     { id: 'total', title: 'Retrouver le total' },
     { id: 'tva', title: 'TVA (France)' },
+    { id: 'faq', title: 'FAQ' },
     { id: 'privacy', title: 'Confidentialité' },
   ];
 
@@ -100,7 +101,7 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
         h('p', { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-3" }, "Sommaire"),
         h('ul', { className: "grid grid-cols-1 sm:grid-cols-2 gap-2" }, sections.map(s => 
           h('li', { key: s.id, className: "text-sm" }, 
-            h('a', { href: `#${s.id}`, className: "text-slate-600 hover:text-indigo-600 flex items-center gap-2" }, [
+            h('a', { href: `#${s.id}`, className: "text-slate-600 hover:text-indigo-600 flex items-center gap-2 transition-colors" }, [
               h('span', { className: "w-1 h-1 bg-indigo-300 rounded-full" }),
               s.title
             ])
@@ -109,10 +110,11 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
       ]),
 
       h('div', { className: "space-y-12 text-slate-600 leading-relaxed" }, [
-        h('section', { id: "settings", className: "bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100/50" }, [
+        
+        h('section', { id: "settings", className: "bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100/50 scroll-mt-20" }, [
           h('h3', { className: "text-xl font-bold text-slate-900 mb-4 flex items-center gap-2" }, "Réglages d'affichage"),
           h('div', { className: "max-w-md" }, [
-            h('p', { className: "text-sm font-semibold text-slate-700 mb-3" }, "Décimales après la virgule"),
+            h('p', { className: "text-sm font-semibold text-slate-700 mb-3" }, "Nombre de décimales"),
             h('div', { className: "flex bg-slate-200/50 p-1 rounded-xl" }, [0, 1, 2, 3].map(v => 
               h('button', {
                 key: v,
@@ -120,37 +122,109 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
                 className: `flex-1 py-2 text-xs font-bold rounded-lg transition-all ${precision === v ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700'}`
               }, `${v} déc.`)
             )),
-            h('p', { className: "mt-2 text-[11px] text-slate-400" }, "Appliqué instantanément à tous les résultats.")
+            h('p', { className: "mt-4 text-xs" }, "Le site utilise le format français (virgule pour les décimales et espaces pour les milliers). Les réglages sont conservés localement sur votre appareil.")
           ])
         ]),
 
-        h('section', { id: "intro" }, [
+        h('section', { id: "intro", className: "scroll-mt-20" }, [
           h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Introduction"),
-          h('p', {}, "Cet outil est conçu pour simplifier vos calculs quotidiens. Que vous soyez commerçant, étudiant ou gestionnaire, nos modules couvrent l'intégralité des besoins courants en calcul de pourcentage.")
+          h('p', {}, "CalculerUnPourcentage est un outil complet conçu pour répondre à tous vos besoins numériques quotidiens. Que ce soit pour vérifier une remise lors des soldes, calculer une commission, gérer la fiscalité d'une entreprise ou analyser une évolution budgétaire, notre interface modulaire vous offre des réponses instantanées."),
+          h('p', { className: "mt-2" }, "Tous les modules ont été optimisés pour un usage mobile-first : saisie facilitée, boutons de copie rapide et fonctionnement hors-ligne (une fois la page chargée).")
         ]),
 
-        h('section', { id: "part" }, [
+        h('section', { id: "part", className: "scroll-mt-20" }, [
           h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Part d'un total"),
-          h('p', { className: "font-semibold text-slate-800" }, "À quoi ça sert :"),
-          h('p', {}, "Calculer un montant spécifique à partir d'un pourcentage (ex: une remise)."),
-          h('p', { className: "mt-2 font-mono text-sm bg-slate-50 p-2 rounded" }, "Résultat = Total × (Pourcentage / 100)"),
-          h('p', { className: "mt-2 italic text-sm" }, "Exemple : 20% de 103 = 20,6")
+          h('p', {}, "C'est l'opération la plus classique. Elle permet de trouver le montant d'une portion à partir d'un pourcentage connu."),
+          h('p', { className: "font-semibold mt-4 text-slate-800" }, "Cas d'usage :"),
+          h('ul', { className: "list-disc ml-5 text-sm" }, [
+            h('li', {}, "Calculer une remise de 15% sur un article à 80€."),
+            h('li', {}, "Déterminer le montant d'un pourboire de 10% sur une addition."),
+            h('li', {}, "Connaître la part de marché d'un produit (ex: 20% des ventes).")
+          ]),
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Valeur = Total × (Pourcentage / 100)"),
+          h('p', { className: "mt-2 italic text-xs" }, "Exemple : 20% de 103 = 20,6")
         ]),
 
-        h('section', { id: "tva" }, [
+        h('section', { id: "ratio", className: "scroll-mt-20" }, [
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Ratio en %"),
+          h('p', {}, "Ce module répond à la question : 'Quelle part représente ce montant par rapport à l'ensemble ?'."),
+          h('p', { className: "font-semibold mt-4 text-slate-800" }, "Exemple :"),
+          h('p', {}, "Si vous avez 50 bonnes réponses sur un test de 200 questions, vous voulez savoir quel est votre pourcentage de réussite."),
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Pourcentage = (Valeur / Total) × 100"),
+          h('p', { className: "mt-2 text-xs text-red-500" }, "Attention : Le total ne peut pas être égal à 0.")
+        ]),
+
+        h('section', { id: "evolution", className: "scroll-mt-20" }, [
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Évolution (Hausse / Baisse)"),
+          h('p', {}, "Appliquez directement un changement à une valeur de départ. Très utile pour les prix après remise ou après inflation."),
+          h('div', { className: "mt-4 space-y-2" }, [
+            h('div', { className: "bg-slate-50 p-3 rounded-lg border-l-4 border-emerald-500 font-mono text-sm" }, "Hausse : Nouveau = Base × (1 + Taux/100)"),
+            h('div', { className: "bg-slate-50 p-3 rounded-lg border-l-4 border-rose-500 font-mono text-sm" }, "Baisse : Nouveau = Base × (1 - Taux/100)")
+          ]),
+          h('p', { className: "mt-4 italic" }, "Saviez-vous qu'une baisse de 20% suivie d'une hausse de 20% ne ramène pas au prix initial ? (100€ → 80€ → 96€).")
+        ]),
+
+        h('section', { id: "variation", className: "scroll-mt-20" }, [
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Taux de variation"),
+          h('p', {}, "Comparez deux valeurs pour connaître la variation relative entre elles."),
+          h('p', { className: "font-semibold mt-4 text-slate-800" }, "Application :"),
+          h('p', {}, "Mesurer la croissance du chiffre d'affaires entre deux années ou l'évolution du prix de l'essence entre deux pleins."),
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Variation % = ((Arrivée - Départ) / Départ) × 100"),
+          h('p', { className: "mt-2 italic text-xs" }, "Exemple : de 100€ à 150€ = +50%.")
+        ]),
+
+        h('section', { id: "total", className: "scroll-mt-20" }, [
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Retrouver le total"),
+          h('p', {}, "Cette opération 'inverse' permet de déduire le montant total à partir d'une portion connue. C'est l'outil parfait pour retrouver un prix avant remise si vous connaissez le montant de la remise et son pourcentage."),
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Total = Part / (Pourcentage / 100)"),
+          h('p', { className: "mt-2 italic text-xs" }, "Exemple : Si 20€ représente 10% d'un budget, alors le budget total est de 200€.")
+        ]),
+
+        h('section', { id: "tva", className: "scroll-mt-20" }, [
           h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "TVA (France)"),
-          h('p', {}, "Permet de jongler entre les montants Hors Taxes (HT) et Toutes Taxes Comprises (TTC)."),
-          h('ul', { className: "list-disc ml-5 mt-2 space-y-1 text-sm" }, [
-            h('li', {}, "20% : Taux normal (biens et services standard)"),
-            h('li', {}, "10% : Restauration, transport, travaux"),
-            h('li', {}, "5,5% : Alimentation, livres, énergie"),
-            h('li', {}, "2,1% : Presse, médicaments remboursés")
+          h('p', {}, "Gérez votre fiscalité en un clic. Ce module permet de basculer entre le Hors Taxes (HT) et le Toutes Taxes Comprises (TTC)."),
+          h('div', { className: "mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4" }, [
+            h('div', { className: "p-4 bg-slate-50 rounded-xl" }, [
+              h('p', { className: "font-bold text-indigo-600 mb-2" }, "Taux standards :"),
+              h('ul', { className: "text-xs space-y-1" }, [
+                h('li', {}, "• 20% : Taux normal (biens/services)"),
+                h('li', {}, "• 10% : Restauration, travaux"),
+                h('li', {}, "• 5,5% : Alimentation, livres"),
+                h('li', {}, "• 2,1% : Presse, médicaments")
+              ])
+            ]),
+            h('div', { className: "p-4 bg-slate-50 rounded-xl" }, [
+              h('p', { className: "font-bold text-indigo-600 mb-2" }, "Calculs :"),
+              h('p', { className: "text-[11px]" }, "TTC = HT × (1 + Taux/100)"),
+              h('p', { className: "text-[11px]" }, "HT = TTC / (1 + Taux/100)"),
+              h('p', { className: "text-[11px] mt-2 font-semibold" }, "Note : En mode TTC vers HT, le résultat affiché est le montant net sans taxes.")
+            ])
           ])
         ]),
 
-        h('section', { id: "privacy", className: "pt-6 border-t border-slate-100" }, [
+        h('section', { id: "faq", className: "scroll-mt-20" }, [
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "FAQ"),
+          h('div', { className: "space-y-4" }, [
+            h('div', {}, [
+              h('p', { className: "font-bold text-slate-800 text-sm" }, "Pourquoi mon résultat affiche 'Invalide' ?"),
+              h('p', { className: "text-xs" }, "Cela arrive généralement quand une division par zéro est tentée (ex: ratio sur un total de 0) ou si les caractères saisis ne sont pas des nombres.")
+            ]),
+            h('div', {}, [
+              h('p', { className: "font-bold text-slate-800 text-sm" }, "Le site gère-t-il les arrondis ?"),
+              h('p', { className: "text-xs" }, "Oui, vous pouvez choisir entre 0 et 3 décimales dans la section Réglages. Par défaut, nous utilisons 2 décimales pour les montants monétaires.")
+            ])
+          ])
+        ]),
+
+        h('section', { id: "privacy", className: "pt-6 border-t border-slate-100 scroll-mt-20" }, [
           h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Confidentialité"),
-          h('p', {}, "Zéro serveur : Tous les calculs s'effectuent localement dans votre navigateur via JavaScript. Aucune des données numériques que vous saisissez n'est transmise ou enregistrée à distance.")
+          h('p', {}, "Contrairement à de nombreux outils en ligne, vos données ne quittent jamais votre navigateur. "),
+          h('ul', { className: "list-disc ml-5 mt-2 space-y-1 text-sm font-medium text-slate-500" }, [
+            h('li', {}, "Aucun envoi de données vers un serveur."),
+            h('li', {}, "Pas de tracking publicitaire intrusif."),
+            h('li', {}, "Conservation locale de vos préférences uniquement."),
+            h('li', {}, "Code source transparent fonctionnant à 100% en JavaScript local.")
+          ])
         ])
       ])
     ])
@@ -222,11 +296,26 @@ const App = () => {
   const runC6 = () => {
     const amt = parseFloat((c6.amt || '0').replace(',', '.')), r = parseFloat((c6.rate || '0').replace(',', '.'));
     if (isNaN(amt) || isNaN(r)) return setC6({ ...c6, err: 'Nombres invalides' });
-    let ht, tva, ttc;
-    if (c6.mode === 'HT_TO_TTC') { ht = amt; tva = ht * (r/100); ttc = ht + tva; }
-    else if (c6.mode === 'TTC_TO_HT') { ttc = amt; ht = ttc / (1 + r/100); tva = ttc - ht; }
-    else { tva = amt; ht = tva / (r/100); ttc = ht + tva; }
-    setC6({ ...c6, res: `${formatNum(ttc)} €`, ph: `HT: ${formatNum(ht)}€ | TVA: ${formatNum(tva)}€ | TTC: ${formatNum(ttc)}€`, err: null });
+    let ht, tva, ttc, mainRes;
+    const rateFactor = r / 100;
+
+    if (c6.mode === 'HT_TO_TTC') {
+      ht = amt;
+      tva = ht * rateFactor;
+      ttc = ht + tva;
+      mainRes = `${formatNum(ttc)} € (TTC)`;
+    } else if (c6.mode === 'TTC_TO_HT') {
+      ttc = amt;
+      ht = ttc / (1 + rateFactor);
+      tva = ttc - ht;
+      mainRes = `${formatNum(ht)} € (HT)`;
+    } else {
+      tva = amt;
+      ht = tva / rateFactor;
+      ttc = ht + tva;
+      mainRes = `${formatNum(ht)} € (HT) / ${formatNum(ttc)} € (TTC)`;
+    }
+    setC6({ ...c6, res: mainRes, ph: `HT: ${formatNum(ht)}€ | TVA: ${formatNum(tva)}€ | TTC: ${formatNum(ttc)}€`, err: null });
   };
 
   return h('div', { className: "min-h-screen flex flex-col" }, [
@@ -317,16 +406,16 @@ const App = () => {
           }, [
             h('div', { className: "flex flex-col gap-1 sm:col-span-2" }, [
               h('div', { className: "flex p-0.5 bg-slate-100 rounded-lg no-scrollbar overflow-x-auto" }, [
-                h('button', { onClick: () => setC6({...c6, mode: 'HT_TO_TTC'}), className: `flex-1 py-1.5 px-2 text-[10px] font-bold rounded whitespace-nowrap ${c6.mode === 'HT_TO_TTC' ? 'bg-white shadow text-indigo-600' : 'text-slate-500'}` }, "HT → TTC"),
-                h('button', { onClick: () => setC6({...c6, mode: 'TTC_TO_HT'}), className: `flex-1 py-1.5 px-2 text-[10px] font-bold rounded whitespace-nowrap ${c6.mode === 'TTC_TO_HT' ? 'bg-white shadow text-indigo-600' : 'text-slate-500'}` }, "TTC → HT"),
-                h('button', { onClick: () => setC6({...c6, mode: 'TVA_ONLY'}), className: `flex-1 py-1.5 px-2 text-[10px] font-bold rounded whitespace-nowrap ${c6.mode === 'TVA_ONLY' ? 'bg-white shadow text-indigo-600' : 'text-slate-500'}` }, "TVA → Tout")
+                h('button', { onClick: () => setC6({...c6, mode: 'HT_TO_TTC'}), className: `flex-1 py-1.5 px-2 text-[10px] font-bold rounded whitespace-nowrap transition-all ${c6.mode === 'HT_TO_TTC' ? 'bg-white shadow text-indigo-600' : 'text-slate-500 hover:text-slate-700'}` }, "HT → TTC"),
+                h('button', { onClick: () => setC6({...c6, mode: 'TTC_TO_HT'}), className: `flex-1 py-1.5 px-2 text-[10px] font-bold rounded whitespace-nowrap transition-all ${c6.mode === 'TTC_TO_HT' ? 'bg-white shadow text-indigo-600' : 'text-slate-500 hover:text-slate-700'}` }, "TTC → HT"),
+                h('button', { onClick: () => setC6({...c6, mode: 'TVA_ONLY'}), className: `flex-1 py-1.5 px-2 text-[10px] font-bold rounded whitespace-nowrap transition-all ${c6.mode === 'TVA_ONLY' ? 'bg-white shadow text-indigo-600' : 'text-slate-500 hover:text-slate-700'}` }, "TVA → Tout")
               ])
             ]),
             h(InputGroup, { label: "Montant (€)", value: c6.amt, onChange: (v) => setC6({...c6, amt: v}), placeholder: "100" }),
             h('div', { className: "flex flex-col gap-1" }, [
               h('label', { className: "text-[10px] font-bold text-slate-500 uppercase tracking-widest" }, "Taux (%)"),
               h('div', { className: "grid grid-cols-2 gap-1" }, ['20', '10', '5.5', '2.1'].map(r => 
-                h('button', { key: r, onClick: () => setC6({...c6, rate: r}), className: `py-1 text-[10px] font-bold border rounded ${c6.rate === r ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white text-slate-600'}` }, `${r}%`)
+                h('button', { key: r, onClick: () => setC6({...c6, rate: r}), className: `py-1 text-[10px] font-bold border rounded transition-all ${c6.rate === r ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white text-slate-600 hover:border-indigo-300'}` }, `${r}%`)
               ))
             ])
           ])
