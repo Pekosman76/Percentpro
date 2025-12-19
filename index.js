@@ -83,11 +83,11 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
   const sections = [
     { id: 'settings', title: 'Réglages d\'affichage' },
     { id: 'intro', title: 'Introduction' },
-    { id: 'part', title: 'Part d\'un total' },
+    { id: 'part', title: 'Part d\'une valeur' },
     { id: 'ratio', title: 'Ratio en %' },
     { id: 'evolution', title: 'Évolution (Hausse/Baisse)' },
     { id: 'variation', title: 'Taux de variation' },
-    { id: 'total', title: 'Retrouver le total' },
+    { id: 'total', title: 'Retrouver la valeur' },
     { id: 'tva', title: 'TVA (France)' },
     { id: 'faq', title: 'FAQ' },
     { id: 'privacy', title: 'Confidentialité' },
@@ -133,7 +133,7 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
         ]),
 
         h('section', { id: "part", className: "scroll-mt-20" }, [
-          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Part d'un total"),
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Part d'une valeur"),
           h('p', {}, "C'est l'opération la plus classique. Elle permet de trouver le montant d'une portion à partir d'un pourcentage connu."),
           h('p', { className: "font-semibold mt-4 text-slate-800" }, "Cas d'usage :"),
           h('ul', { className: "list-disc ml-5 text-sm" }, [
@@ -141,17 +141,17 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
             h('li', {}, "Déterminer le montant d'un pourboire de 10% sur une addition."),
             h('li', {}, "Connaître la part de marché d'un produit (ex: 20% des ventes).")
           ]),
-          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Valeur = Total × (Pourcentage / 100)"),
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Montant = Valeur × (Pourcentage / 100)"),
           h('p', { className: "mt-2 italic text-xs" }, "Exemple : 20% de 103 = 20,6")
         ]),
 
         h('section', { id: "ratio", className: "scroll-mt-20" }, [
           h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Ratio en %"),
-          h('p', {}, "Ce module répond à la question : 'Quelle part représente ce montant par rapport à l'ensemble ?'."),
+          h('p', {}, "Ce module répond à la question : 'Quelle part représente ce montant par rapport à une valeur de référence ?'."),
           h('p', { className: "font-semibold mt-4 text-slate-800" }, "Exemple :"),
           h('p', {}, "Si vous avez 50 bonnes réponses sur un test de 200 questions, vous voulez savoir quel est votre pourcentage de réussite."),
-          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Pourcentage = (Valeur / Total) × 100"),
-          h('p', { className: "mt-2 text-xs text-red-500" }, "Attention : Le total ne peut pas être égal à 0.")
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Pourcentage = (Portion / Valeur) × 100"),
+          h('p', { className: "mt-2 text-xs text-red-500" }, "Attention : La valeur de référence ne peut pas être égale à 0.")
         ]),
 
         h('section', { id: "evolution", className: "scroll-mt-20" }, [
@@ -174,10 +174,10 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
         ]),
 
         h('section', { id: "total", className: "scroll-mt-20" }, [
-          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Retrouver le total"),
-          h('p', {}, "Cette opération 'inverse' permet de déduire le montant total à partir d'une portion connue. C'est l'outil parfait pour retrouver un prix avant remise si vous connaissez le montant de la remise et son pourcentage."),
-          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Total = Part / (Pourcentage / 100)"),
-          h('p', { className: "mt-2 italic text-xs" }, "Exemple : Si 20€ représente 10% d'un budget, alors le budget total est de 200€.")
+          h('h3', { className: "text-xl font-bold text-slate-900 mb-3" }, "Retrouver la valeur"),
+          h('p', {}, "Cette opération 'inverse' permet de déduire la valeur initiale à partir d'une portion connue. C'est l'outil parfait pour retrouver un prix avant remise si vous connaissez le montant de la remise et son pourcentage."),
+          h('div', { className: "mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-indigo-500 font-mono text-sm" }, "Valeur = Part / (Pourcentage / 100)"),
+          h('p', { className: "mt-2 italic text-xs" }, "Exemple : Si 20€ représente 10% d'un budget, alors la valeur totale est de 200€.")
         ]),
 
         h('section', { id: "tva", className: "scroll-mt-20" }, [
@@ -207,7 +207,7 @@ const HelpSection = ({ precision, onPrecisionChange }) => {
           h('div', { className: "space-y-4" }, [
             h('div', {}, [
               h('p', { className: "font-bold text-slate-800 text-sm" }, "Pourquoi mon résultat affiche 'Invalide' ?"),
-              h('p', { className: "text-xs" }, "Cela arrive généralement quand une division par zéro est tentée (ex: ratio sur un total de 0) ou si les caractères saisis ne sont pas des nombres.")
+              h('p', { className: "text-xs" }, "Cela arrive généralement quand une division par zéro est tentée (ex: ratio sur une valeur de 0) ou si les caractères saisis ne sont pas des nombres.")
             ]),
             h('div', {}, [
               h('p', { className: "font-bold text-slate-800 text-sm" }, "Le site gère-t-il les arrondis ?"),
@@ -266,7 +266,7 @@ const App = () => {
 
   const runC2 = () => {
     const v = parseFloat((c2.v || '0').replace(',', '.')), t = parseFloat((c2.t || '0').replace(',', '.'));
-    if (isNaN(v) || isNaN(t) || t === 0) return setC2({ ...c2, err: 'Total nul impossible' });
+    if (isNaN(v) || isNaN(t) || t === 0) return setC2({ ...c2, err: 'Valeur nulle impossible' });
     const r = (v / t) * 100;
     setC2({ ...c2, res: `${formatNum(r)}%`, ph: `${v} sur ${t} = ${formatNum(r)}%`, err: null });
   };
@@ -290,7 +290,7 @@ const App = () => {
     const part = parseFloat((c5.part || '0').replace(',', '.')), p = parseFloat((c5.p || '0').replace(',', '.'));
     if (isNaN(part) || isNaN(p) || p === 0) return setC5({ ...c5, err: 'Pourcentage invalide' });
     const r = part / (p / 100);
-    setC5({ ...c5, res: formatNum(r), ph: `Si ${part} = ${p}%, alors total = ${formatNum(r)}`, err: null });
+    setC5({ ...c5, res: formatNum(r), ph: `Si ${part} = ${p}%, alors la valeur est ${formatNum(r)}`, err: null });
   };
 
   const runC6 = () => {
@@ -337,14 +337,14 @@ const App = () => {
         h('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" }, [
           
           h(CalculatorCard, {
-            title: "Part d'un total", description: "Calculer X% d'une valeur.",
+            title: "Part d'une valeur", description: "Calculer X% d'une valeur.",
             icon: h('svg', { fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, h('path', { d: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z", strokeWidth: "2" })),
             result: c1.res, resultPhrase: c1.ph, error: c1.err,
             onCalculate: runC1, onReset: () => setC1({ ...c1, p: '', t: '', res: null }), onExample: () => setC1({ ...c1, p: '20', t: '103' }),
             onCopy: handleCopy
           }, [
             h(InputGroup, { label: "Pourcentage", value: c1.p, onChange: (v) => setC1({...c1, p: v}), placeholder: "20", suffix: "%" }),
-            h(InputGroup, { label: "Total", value: c1.t, onChange: (v) => setC1({...c1, t: v}), placeholder: "103" })
+            h(InputGroup, { label: "Valeur", value: c1.t, onChange: (v) => setC1({...c1, t: v}), placeholder: "103" })
           ]),
 
           h(CalculatorCard, {
@@ -354,8 +354,8 @@ const App = () => {
             onCalculate: runC2, onReset: () => setC2({ ...c2, v: '', t: '', res: null }), onExample: () => setC2({ ...c2, v: '50', t: '200' }),
             onCopy: handleCopy
           }, [
-            h(InputGroup, { label: "Valeur", value: c2.v, onChange: (v) => setC2({...c2, v: v}), placeholder: "50" }),
-            h(InputGroup, { label: "Total", value: c2.t, onChange: (v) => setC2({...c2, t: v}), placeholder: "200" })
+            h(InputGroup, { label: "Portion", value: c2.v, onChange: (v) => setC2({...c2, v: v}), placeholder: "50" }),
+            h(InputGroup, { label: "Valeur", value: c2.t, onChange: (v) => setC2({...c2, t: v}), placeholder: "200" })
           ]),
 
           h(CalculatorCard, {
@@ -387,13 +387,13 @@ const App = () => {
           ]),
 
           h(CalculatorCard, {
-            title: "Retrouver le total", description: "Inverser un pourcentage.",
+            title: "Retrouver la valeur", description: "Inverser un pourcentage.",
             icon: h('svg', { fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" }, h('path', { d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z", strokeWidth: "2" })),
             result: c5.res, resultPhrase: c5.ph, error: c5.err,
             onCalculate: runC5, onReset: () => setC5({ ...c5, part: '', p: '', res: null }), onExample: () => setC5({ ...c5, part: '20,6', p: '20' }),
             onCopy: handleCopy
           }, [
-            h(InputGroup, { label: "Part connue", value: c5.part, onChange: (v) => setC5({...c5, part: v}), placeholder: "20,6" }),
+            h(InputGroup, { label: "Portion connue", value: c5.part, onChange: (v) => setC5({...c5, part: v}), placeholder: "20,6" }),
             h(InputGroup, { label: "Pourcentage", value: c5.p, onChange: (v) => setC5({...c5, p: v}), placeholder: "20", suffix: "%" })
           ]),
 
