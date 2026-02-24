@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirection…</title>
+    <script>
+      const path = window.location.pathname;
+      const query = window.location.search ? window.location.search.slice(1).replace(/&/g, '~and~') : '';
+      const hash = window.location.hash;
+      window.location.replace('/?/' + path.slice(1) + (query ? '&' + query : '') + hash);
+    </script>
+  </head>
+  <body></body>
+</html>
