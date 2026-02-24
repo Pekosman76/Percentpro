@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 
 const h = React.createElement;
 const BASE_URL = 'https://calculerunpoucentage.fr';
-const LAST_UPDATED = '24/02/2026';
 
 const navItems = [
   { path: '/', label: 'Accueil' },
@@ -22,7 +21,7 @@ const FAQ_ITEMS = [
   ['Pourquoi une baisse de 20% puis une hausse de 20% ne compensent pas ?', 'Parce que la base change entre les deux opérations : 100 → 80 → 96.'],
   ['Quel est le taux de variation entre 150 et 180 ?', '((180 - 150) / 150) × 100 = +20%.'],
   ['Comment retrouver la valeur initiale ?', 'Si 20,6 représente 20%, la valeur vaut 20,6 ÷ 0,20 = 103.'],
-  ['Le calculateur enregistre-t-il mes données ?', 'Les saisies sont traitées localement dans le navigateur. Seule la préférence d\'arrondi peut être conservée en localStorage.'],
+  ['Le calculateur enregistre-t-il mes données ?', 'Les saisies sont traitées localement dans le navigateur. Les saisies ne sont pas sauvegardées après fermeture de la page.'],
   ['Ce site remplace-t-il un conseil comptable ?', 'Non. Les résultats sont fournis à titre indicatif et doivent être vérifiés avant toute décision juridique, fiscale ou contractuelle.']
 ];
 
@@ -276,7 +275,6 @@ ${FAQ_ITEMS.map(([q, a]) => `<details><summary><strong>${q}</strong></summary><p
 <p>Certains services tiers (notamment publicitaires) peuvent impliquer des transferts de données vers des pays hors Union européenne, encadrés par les mécanismes juridiques prévus par la réglementation applicable et les engagements des prestataires.</p>
 <h2>15. Réclamations</h2>
 <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez nous contacter en priorité pour une résolution amiable. Vous disposez également de la possibilité de saisir l’autorité de contrôle compétente.</p>
-<p><em>Dernière mise à jour : ${LAST_UPDATED}</em></p>
 `;
 
 const aboutContent = `
@@ -306,9 +304,9 @@ const aboutContent = `
 <p>Un calculateur est un outil d’aide, pas un audit comptable ni un conseil juridique. Les limites les plus importantes sont : la qualité des données saisies, le choix de la base, et la manière d’arrondir les résultats. Une erreur de base entraîne un résultat mathématiquement correct mais décisionnellement faux.</p>
 <p>Exemple : annoncer « +30% » sans préciser la période, la base ou le périmètre (hors taxes / toutes taxes comprises) peut induire en erreur. Nous recommandons d’indiquer systématiquement : la base, la période, le taux et l’unité.</p>
 <h3>Arrondis</h3>
-<p>Le site permet de choisir le niveau d’arrondi. Pour des prix publics, l’arrondi à deux décimales est généralement adapté. Pour une analyse interne, conserver davantage de décimales peut être pertinent afin d’éviter les écarts de cumul.</p>
+<p>Le site applique un arrondi à deux décimales pour garder des résultats lisibles dans les usages courants.</p>
 <h2>Transparence</h2>
-<p>Les calculs sont traités localement dans votre navigateur. Concrètement, quand vous saisissez une valeur, elle n’est pas envoyée à un serveur applicatif pour le calcul lui-même. Une préférence d’affichage (arrondi) peut être enregistrée localement pour votre confort.</p>
+<p>Les calculs sont traités localement dans votre navigateur. Concrètement, quand vous saisissez une valeur, elle n’est pas envoyée à un serveur applicatif pour le calcul lui-même. Aucune préférence d’arrondi n’est stockée.</p>
 <p>Le site peut afficher de la publicité (Google AdSense) pour financer l’hébergement et la maintenance. Dans ce cas, des cookies ou technologies similaires peuvent être utilisés par ces services tiers, selon leurs propres politiques.</p>
 <h2>Qualité éditoriale</h2>
 <p>Nous privilégions des exemples réalistes : remise, commission, TVA, variation de chiffre d’affaires, conversion commerciale, et ratios simples. Chaque section est conçue pour répondre à une intention de recherche concrète, sans remplissage artificiel de mots-clés.</p>
@@ -327,7 +325,6 @@ const aboutContent = `
 <p>Le site est mis à jour régulièrement pour corriger des imprécisions, améliorer la lisibilité mobile, clarifier des cas ambigus et renforcer les contenus explicatifs. Les retours utilisateurs sont une source prioritaire d’amélioration.</p>
 <p>Si vous utilisez le site dans un cadre professionnel, nous vous recommandons de documenter vos conventions de calcul (base, arrondi, taux) afin de garantir la cohérence interne des décisions.</p>
 <p>Besoin d’aide ou de signaler un problème ? Rendez-vous sur la page <a href="/contact">Contact</a>.</p>
-<p><em>Dernière mise à jour : ${LAST_UPDATED}</em></p>
 `;
 
 const legalContent = `
@@ -365,7 +362,6 @@ const legalContent = `
 <p>L’éditeur peut mettre à jour les présentes mentions légales à tout moment pour refléter l’évolution du site, des obligations réglementaires ou des services tiers utilisés. La date de dernière mise à jour est indiquée en bas de page.</p>
 <h2>19. Usage raisonnable</h2>
 <p>L’utilisation automatisée excessive pouvant dégrader les performances du service peut être limitée. L’éditeur se réserve la possibilité de mettre en place des protections techniques proportionnées pour préserver la disponibilité.</p>
-<p><em>Dernière mise à jour : ${LAST_UPDATED}</em></p>
 `;
 
 const privacyContent = `
@@ -374,7 +370,7 @@ const privacyContent = `
 <p>La confidentialité des utilisateurs est un principe important sur calculerunpoucentage.fr. Cette politique explique quelles données peuvent être traitées, dans quel but, et quels sont vos droits.</p>
 <h2>2. Données saisies dans les calculateurs</h2>
 <p>Les valeurs numériques que vous entrez dans les calculateurs de pourcentage et de TVA sont traitées localement dans votre navigateur pour produire le résultat. Elles ne sont pas, par défaut, stockées sur un serveur applicatif dédié au calcul.</p>
-<p>Une préférence locale (par exemple le niveau d’arrondi) peut être enregistrée sur votre appareil via le stockage local du navigateur (localStorage) afin d’améliorer l’expérience utilisateur.</p>
+<p>Le choix de consentement cookies est mémorisé localement sur votre appareil via le stockage local du navigateur (localStorage).</p>
 <h2>3. Cookies et technologies similaires</h2>
 <p>Le site peut utiliser des cookies techniques nécessaires au fonctionnement et, selon la configuration, des cookies liés à des services tiers (notamment publicitaires). Les cookies servent par exemple à mémoriser certaines préférences, mesurer l’audience de manière agrégée si un service est activé, ou diffuser des annonces adaptées.</p>
 <h2>4. Publicité et services tiers</h2>
@@ -405,7 +401,6 @@ const privacyContent = `
 <p>Pour toute question sur la protection des données, vous pouvez contacter l’éditeur via l’adresse dédiée : <a href="mailto:laloumaxime951@gmail.com">laloumaxime951@gmail.com</a>. Merci de décrire précisément votre demande et le contexte afin d’accélérer le traitement.</p>
 <h2>17. Bonnes pratiques utilisateur</h2>
 <ul><li>Effacez régulièrement les données de navigation si vous utilisez un appareil partagé.</li><li>Vérifiez les paramètres cookies de votre navigateur.</li><li>Évitez de transmettre par email des informations sensibles inutiles.</li></ul>
-<p><em>Dernière mise à jour : ${LAST_UPDATED}</em></p>
 `;
 
 const contactContent = `
@@ -420,14 +415,13 @@ const contactContent = `
 <li>le résultat attendu.</li>
 </ul>
 <p>Vous pouvez aussi utiliser ce lien direct : <a href="mailto:laloumaxime951@gmail.com?subject=Contact%20calculerunpoucentage.fr">Envoyer un email</a>.</p>
-<p><em>Dernière mise à jour : ${LAST_UPDATED}</em></p>
 `;
 
 const RichTextPage = ({ html }) => h('article', { className: 'prose-lite mx-auto bg-white border border-slate-200 rounded-2xl p-6 md:p-10', dangerouslySetInnerHTML: { __html: html } });
 
 const App = () => {
   const [path, setPath] = useState(window.location.pathname || '/');
-  const [precision, setPrecision] = useState(2);
+  const [cookieConsent, setCookieConsent] = useState(null);
 
   const navigate = (to) => {
     if (to === path) return;
@@ -441,6 +435,19 @@ const App = () => {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
+
+
+  useEffect(() => {
+    const savedConsent = localStorage.getItem('calculerunpourcentage_cookie_consent');
+    if (savedConsent === 'accepted' || savedConsent === 'refused') {
+      setCookieConsent(savedConsent);
+    }
+  }, []);
+
+  const setConsent = (value) => {
+    localStorage.setItem('calculerunpourcentage_cookie_consent', value);
+    setCookieConsent(value);
+  };
 
   useEffect(() => {
     const seo = seoByPath[path] || seoByPath['/'];
@@ -493,17 +500,7 @@ const App = () => {
     script.textContent = JSON.stringify(data);
   }, [path]);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('calculerunpourcentage_precision');
-    if (saved !== null) {
-      const val = parseInt(saved, 10);
-      if ([0, 1, 2, 3].includes(val)) setPrecision(val);
-    }
-  }, []);
-
-  useEffect(() => localStorage.setItem('calculerunpourcentage_precision', String(precision)), [precision]);
-
-  const formatNum = useCallback((n) => new Intl.NumberFormat('fr-FR', { maximumFractionDigits: precision, minimumFractionDigits: 0 }).format(n), [precision]);
+  const formatNum = useCallback((n) => new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2, minimumFractionDigits: 0 }).format(n), []);
   const handleCopy = (text) => navigator.clipboard.writeText(text.replace(/\s/g, '').replace(',', '.'));
 
   const [c1, setC1] = useState({ p: '', t: '', res: null, ph: null, err: null });
@@ -524,7 +521,6 @@ const App = () => {
     h('section', { className: 'bg-white border border-slate-200 rounded-2xl p-6 md:p-8' }, [
       h('h1', { className: 'text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-3' }, 'Calculer un pourcentage (%, TVA, évolution, ratio)'),
       h('p', { className: 'text-slate-600 max-w-3xl' }, 'Utilisez les calculateurs ci-dessous pour obtenir un résultat immédiat, puis consultez le guide complet pour comprendre les formules, éviter les erreurs fréquentes et appliquer les bons calculs en situation réelle.'),
-      h('p', { className: 'text-xs text-slate-500 mt-3' }, `Dernière mise à jour : ${LAST_UPDATED}`)
     ]),
     h('div', { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' }, [
       h(CalculatorCard, { title: "Part d'une valeur", description: "Calculer X% d'une valeur.", icon: h('span', { role: 'img', 'aria-label': 'icône calcul partiel' }, '🧮'), result: c1.res, resultPhrase: c1.ph, error: c1.err, onCalculate: runC1, onReset: () => setC1({ ...c1, p: '', t: '', res: null }), onExample: () => setC1({ ...c1, p: '20', t: '103' }), onCopy: handleCopy }, [h(InputGroup, { label: 'Pourcentage', value: c1.p, onChange: (v) => setC1({ ...c1, p: v }), placeholder: '20', suffix: '%' }), h(InputGroup, { label: 'Valeur', value: c1.t, onChange: (v) => setC1({ ...c1, t: v }), placeholder: '103' })]),
@@ -552,7 +548,6 @@ const App = () => {
       h('div', { className: 'max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4' }, [
         h('button', { onClick: () => navigate('/'), className: 'flex items-center gap-2' }, [h('div', { className: 'w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black text-lg', 'aria-label': 'logo pourcentage' }, '%'), h('span', { className: 'text-lg font-black text-slate-800 tracking-tighter sm:text-xl' }, ['CalculerUn', h('span', { className: 'text-indigo-600' }, 'Pourcentage')])]),
         h('nav', { className: 'hidden md:flex items-center gap-4 text-sm font-semibold text-slate-600' }, navItems.map((item) => h('a', { key: item.path, href: item.path, onClick: (e) => { e.preventDefault(); navigate(item.path); }, className: `hover:text-indigo-600 ${path === item.path ? 'text-indigo-600' : ''}` }, item.label))),
-        path === '/' && h('div', { className: 'text-xs text-slate-500' }, [`Arrondi: `, h('select', { value: precision, onChange: (e) => setPrecision(Number(e.target.value)), className: 'border rounded px-1 py-0.5 ml-1' }, [0,1,2,3].map((v)=>h('option', { key: v, value: v }, `${v} déc.`)))])
       ])
     ),
     pageMap[path] || h('main', { className: 'flex-grow max-w-4xl mx-auto px-4 w-full py-12' }, h('div', { className: 'bg-white border border-slate-200 rounded-2xl p-8 text-center' }, [h('h1', { className: 'text-3xl font-black mb-3' }, 'Page non trouvée'), h('p', { className: 'text-slate-600 mb-4' }, 'Le contenu demandé n’existe pas ou a été déplacé.'), h('button', { onClick: () => navigate('/'), className: 'px-4 py-2 bg-indigo-600 text-white rounded-lg' }, 'Retour à l’accueil') ])),
@@ -565,6 +560,16 @@ const App = () => {
         h('p', {}, ['Ce site ne collecte ni ne conserve directement de données personnelles liées aux calculs saisis ; les calculs sont traités localement dans votre navigateur. Google AdSense peut utiliser des cookies publicitaires. En savoir plus : ', h('a', { href: 'https://policies.google.com/technologies/ads', className: 'text-indigo-700' }, 'https://policies.google.com/technologies/ads')]),
         h('p', { className: 'text-slate-500' }, navItems.slice(1).map((item, i) => h(React.Fragment, { key: item.path }, [i > 0 ? ' | ' : '', h('a', { href: item.path, onClick: (e) => { e.preventDefault(); navigate(item.path); }, className: 'text-indigo-700' }, item.label)]))),
         h('p', { className: 'text-xs text-slate-400 pt-2' }, `© ${currentYear} calculerunpoucentage.fr`)
+      ])
+    ),
+
+    cookieConsent === null && h('div', { className: 'fixed bottom-0 inset-x-0 z-50 px-3 pb-3 sm:px-4 sm:pb-4' },
+      h('div', { className: 'max-w-4xl mx-auto bg-white border border-slate-200 shadow-lg rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between' }, [
+        h('p', { className: 'text-xs sm:text-sm text-slate-600' }, "Ce site utilise des cookies pour améliorer l'expérience et diffuser des annonces via Google AdSense."),
+        h('div', { className: 'flex items-center gap-2 self-end sm:self-auto' }, [
+          h('button', { onClick: () => setConsent('refused'), className: 'px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-600 border border-slate-300 rounded-md hover:bg-slate-50 transition-colors' }, 'Refuser'),
+          h('button', { onClick: () => setConsent('accepted'), className: 'px-3 py-1.5 text-xs sm:text-sm font-semibold text-white bg-indigo-600 border border-indigo-600 rounded-md hover:bg-indigo-700 transition-colors' }, 'Accepter')
+        ])
       ])
     )
   ]);
